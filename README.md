@@ -109,6 +109,7 @@ python main.py
 Si vous rencontrez des problèmes, assurez-vous que toutes les étapes ont été suivies correctement et que vos bibliothèques sont à jour.
 
 ## Utilisation
+Pour des informations détaillées sur le fonctionnement de ce projet, veuillez consulter la [Documentation](./DOCUMENTATION.md).
 
 ### Mode Normal
 1. Ouvrez l'application et entrez une description d’une sensation tactile dans le champ de saisie.
