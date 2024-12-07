@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# WAV files in Output folder
+Output/*.wav
+
+# Caches
+*.pyc
+*.pyo
+*.pyd
+
+# Environment files
+.env
+.venv
+venv/
+ENV/
+
+# IDE Specific
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
