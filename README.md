@@ -1,6 +1,6 @@
 # Générateur Audio Vibrotactile
 
-Le Générateur Audio Vibrotactile est une application avancée en Python conçue pour générer et lire des fichiers audio imitant des sensations tactiles. Cet outil est idéal pour les développeurs et chercheurs travaillant sur des projets liés à la rétroaction haptique, en particulier dans les jeux vidéo et les applications de réalité étendue (XR).
+Le Générateur Audio Vibrotactile est une application avancée en Python conçue pour générer et lire des fichiers audio imitant des sensations tactiles. Cet outil est idéal pour les développeurs et chercheurs travaillant sur des projets liés à la rétroaction haptique vibrotactile, en particulier dans les jeux vidéo et les applications de réalité étendue (XR).
 
 ## Fonctionnalités
 
