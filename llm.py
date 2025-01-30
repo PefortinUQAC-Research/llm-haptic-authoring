@@ -1,4 +1,4 @@
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
@@ -11,19 +11,19 @@ class LLMClass:
         self.api_key = self.settings.get("api_key", "")
         self.model_name = self.settings.get("model_name", "")
 
-        self.llm = ChatOpenAI(
+        self.llm = ChatOllama(
             temperature = self.temperature,
             base_url = self.url,
-            api_key = self.api_key,
+            client_kwargs={"headers": {"Authorization": f"Bearer {self.api_key}"}},
             model = self.model_name
         )
         pass
 
     def update_llm_settings(self, temperature, url, api_key, model_name):
-        self.llm = self.llm = ChatOpenAI(
+        self.llm = self.llm = ChatOllama(
             temperature = temperature,
             base_url = url,
-            api_key = api_key,
+            client_kwargs={"headers": {"Authorization": f"Bearer {self.api_key}"}},
             model = model_name
         )
 
