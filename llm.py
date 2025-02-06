@@ -86,6 +86,9 @@ class LLMClass:
                 "which in turn are going to be used to create vibrotactile haptic feedbacks in video games and XR experiences."
             )),
             SystemMessage(content=(
+                "Your descriptions of vibrotactile haptic feedback should focus on rhythm and tempo as much as timbre."
+            )),
+            SystemMessage(content=(
                 "Example:\n"
                 "prompt given: A soft, dampened, mid-frequency vibration with a cushioned texture.\n"
                 "Output: {\n"
