@@ -656,7 +656,8 @@ class AppGUI:
             logger.error(f"Error during audio generation: {e}")
             self.show_error(str(e))
         finally:
-            self.reset_input_fields()
+            if not self.advanced_mode.get():
+                self.reset_input_fields()
             self.processing = False
             self.enable_buttons()
 
