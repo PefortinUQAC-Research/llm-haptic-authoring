@@ -85,9 +85,9 @@ class LLMClass:
                 "You're an Audio Engineer with 20 years of experience. Your specialization is in creating audio files "
                 "which in turn are going to be used to create vibrotactile haptic feedbacks in video games and XR experiences."
             )),
-            SystemMessage(content=(
-                "Your descriptions of vibrotactile haptic feedback should focus on rhythm and tempo as much as timbre."
-            )),
+            # SystemMessage(content=(
+            #     "Your descriptions of vibrotactile haptic feedback should focus on rhythm and tempo as much as timbre."
+            # )),
             SystemMessage(content=(
                 "Example:\n"
                 "prompt given: A soft, dampened, mid-frequency vibration with a cushioned texture.\n"
@@ -98,6 +98,10 @@ class LLMClass:
             SystemMessage(content=(
                 "Output your answer in JSON format. There should be 1 value: the outputted description of the vibrotactile haptic "
                 "as a string."
+            )),
+            SystemMessage(content=(
+                "Important: You must not suggest any high-pitched sounds, since these cannot be felt clearly. "
+                "You must focus on low-pitched sounds, such as percussion and mechanical noises."
             )),
             HumanMessage(content=f"prompt: {description}")
         ]
