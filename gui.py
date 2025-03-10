@@ -70,7 +70,7 @@ class AppGUI:
         self.notebook.pack(pady=10, expand=True)
 
         self.tabs = {
-            "Audio Generation": ttk.Frame(self.notebook),
+            "Audio Generation": VerticalScrolledFrame(self.notebook), #ttk.Frame(self.notebook),
             "Audio Playback": ttk.Frame(self.notebook),
             "Settings": ttk.Frame(self.notebook)
         }
@@ -83,7 +83,7 @@ class AppGUI:
         """
         Create the Audio Generation tab UI components.
         """
-        audio_gen_frame = self.tabs["Audio Generation"]
+        audio_gen_frame = self.tabs["Audio Generation"].interior
         self.audio_gen_frame = audio_gen_frame  # Store reference for advanced mode components
 
         # Advanced Mode Checkbox
@@ -921,3 +921,33 @@ class AppGUI:
         """
         # Perform any necessary cleanup
         self.root.destroy()
+
+
+# Relying on https://stackoverflow.com/questions/16188420/tkinter-scrollbar-for-frame
+class VerticalScrolledFrame(ttk.Frame):
+    def __init__(self, parent, *args, **kwargs):
+        ttk.Frame.__init__(self, parent, *args, **kwargs)
+
+        scrollbar = ttk.Scrollbar(self, orient=tk.constants.VERTICAL)
+        scrollbar.pack(fill=tk.constants.Y, side=tk.constants.RIGHT, expand=tk.constants.FALSE)
+        canvas = tk.Canvas(self, bd=0, highlightthickness=0, yscrollcommand=scrollbar.set)
+        canvas.pack(side=tk.constants.LEFT, fill=tk.constants.BOTH, expand=tk.constants.TRUE)
+        scrollbar.config(command=canvas.yview)
+
+        canvas.xview_moveto(0)
+        canvas.yview_moveto(0)
+
+        self.interior = interior = ttk.Frame(canvas)
+        interior_id = canvas.create_window(0, 0, window=interior, anchor=tk.constants.NW)
+
+        def _configure_interior(event):
+            size = (interior.winfo_reqwidth(), interior.winfo_reqheight())
+            canvas.config(scrollregion="0 0 %s %s" % size)
+            if interior.winfo_reqwidth() != canvas.winfo_width():
+                canvas.config(width=interior.winfo_reqwidth())
+        interior.bind('<Configure>', _configure_interior)
+
+        def _configure_canvas(event):
+            if interior.winfo_reqwidth() != canvas.winfo_width():
+                canvas.itemconfigure(interior_id, width=canvas.winfo_width())
+        canvas.bind('<Configure>', _configure_canvas)
