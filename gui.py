@@ -67,7 +67,7 @@ class AppGUI:
         Create the notebook (tabbed layout) for the application.
         """
         self.notebook = ttk.Notebook(self.root)
-        self.notebook.pack(pady=10, expand=True)
+        self.notebook.pack(fill=tk.constants.BOTH, expand=True)
 
         self.tabs = {
             "Audio Generation": VerticalScrolledFrame(self.notebook), #ttk.Frame(self.notebook),
