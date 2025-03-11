@@ -6,6 +6,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext
 from typing import Any, Dict, Optional
+from datetime import datetime
 
 import utils
 from llm import LLMClass
@@ -606,7 +607,12 @@ class AppGUI:
                 file_name = prompt1_json.get("name", "default_name")
                 duration = prompt1_json.get("duration", 0)
                 prompt2_text = prompt2_json.get("description", "")
-                self.generate_audio_files(prompt2_text, duration, file_name, num_generations, save_path, generated_files)
+                prompt_dict = {
+                    "initial": user_input,
+                    "prompt1": prompt1_json,
+                    "prompt2": prompt2_json
+                }
+                self.generate_audio_files(prompt2_text, duration, file_name, num_generations, save_path, generated_files, prompt_dict)
         except Exception as e:
             logger.error(f"Error during audio generation: {e}")
             self.show_error(str(e))
@@ -651,7 +657,13 @@ class AppGUI:
                 self.show_warning("Please specify an audio save path in Settings.")
                 return
             generated_files = []
-            self.generate_audio_files(prompt2_text, duration, file_name, num_generations, save_path, generated_files)
+            user_input = self.text_input.get("1.0", tk.END).strip()
+            prompt_dict = {
+                "initial": user_input,
+                "prompt1": prompt1_json,
+                "prompt2": prompt2_json
+            }
+            self.generate_audio_files(prompt2_text, duration, file_name, num_generations, save_path, generated_files, prompt_dict)
         except Exception as e:
             logger.error(f"Error during audio generation: {e}")
             self.show_error(str(e))
@@ -693,7 +705,7 @@ class AppGUI:
                 self.processing = False
                 self.enable_buttons()
 
-    def generate_audio_files(self, prompt_text, duration, file_name, num_generations, save_path, generated_files):
+    def generate_audio_files(self, prompt_text, duration, file_name, num_generations, save_path, generated_files, prompt_dict=None):
         """
         Generate audio files based on the given prompt.
         """
@@ -714,6 +726,13 @@ class AppGUI:
 
                 # Update progress bar
                 self.update_progress_bar(iteration + 1)
+
+            with open(f"{save_path}/{file_name}_prompt.txt", 'a', encoding="utf-8") as f:
+                f.write(f"{datetime.now().isoformat(timespec='seconds')}\n")
+                if type(prompt_dict) == dict:
+                    f.write(f"{json.dumps(prompt_dict)}\n")
+                else:
+                    f.write(f"{prompt_text}\n")
 
             self.show_info("Audio generation completed successfully!")
             self.audio_player.audio_generation_done(generated_files)
