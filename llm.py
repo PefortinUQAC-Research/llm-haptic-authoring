@@ -100,8 +100,7 @@ class LLMClass:
                 "as a string."
             )),
             SystemMessage(content=(
-                "Important: You must not suggest any high-pitched sounds, since these cannot be felt clearly. "
-                "You must focus on low-pitched sounds, such as percussion and mechanical noises."
+                "Important: Avoid high-pitched sounds as these may not be felt clearly."
             )),
             HumanMessage(content=f"prompt: {description}")
         ]
