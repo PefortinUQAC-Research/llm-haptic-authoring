@@ -11,6 +11,7 @@ from datetime import datetime
 import utils
 from llm import LLMClass
 from audio_player import PygameMediaPlayer
+from log import add_to_log
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -344,6 +345,7 @@ class AppGUI:
                     self.show_warning("Please enter a tactile sensation description.")
                     return
                 new_response = self.llm.generate_description_prompt1(input_text)
+                add_to_log("orig_to_p1", input_text, new_response)
                 response_data = json.loads(new_response)
                 with self.lock:
                     self.saved_prompt1_response = new_response
@@ -354,6 +356,7 @@ class AppGUI:
                     self.show_warning("Prompt 1 description is empty. Please generate or enter a description.")
                     return
                 new_response = self.llm.generate_description_prompt2(prompt1_description)
+                add_to_log("p1_to_p2", prompt1_description, new_repsonse)
                 response_data = json.loads(new_response)
                 with self.lock:
                     self.saved_prompt2_response = new_response
@@ -460,6 +463,7 @@ class AppGUI:
                 self.show_warning("Prompt 1 description is empty. Please generate or enter a description.")
                 return
             new_response = self.llm.generate_description_prompt2(self.saved_prompt1_response)
+            add_to_log("p1_to_p2", self.saved_prompt1_response, new_response)
             response_data = json.loads(new_response)
             with self.lock:
                 self.saved_prompt2_response = new_response
@@ -680,12 +684,14 @@ class AppGUI:
         try:
             if prompt_num == 1:
                 response_text = self.llm.generate_description_prompt1(prompt_text)
+                add_to_log("orig_to_p1", prompt_text, response_text)
                 response_data = json.loads(response_text)
                 with self.lock:
                     self.saved_prompt1_response = response_text
                 self.update_prompt1_fields(response_data)
             else:
                 response_text = self.llm.generate_description_prompt2(prompt_text)
+                add_to_log("p1_to_p2", prompt_text, response_text)
                 response_data = json.loads(response_text)
                 with self.lock:
                     self.saved_prompt2_response = response_text
@@ -718,6 +724,7 @@ class AppGUI:
 
             self.generator.update_model_settings(duration)
 
+            add_to_log("p2_to_effect", prompt_text, f"{num_generations}x {file_name}")
             for iteration in range(num_generations):
                 output_cpu = self.generator.generate_model(prompt_text)
                 generated_file_name = f"{file_name}_{iteration}.wav"
@@ -799,6 +806,7 @@ class AppGUI:
                 return
 
             edited_json = self.llm.generate_edited_prompt(json_string, instructions)
+            add_to_log(f"revise_p{prompt_num}", f"{json_string};{instructions}", edited_json)
             edited_data = json.loads(edited_json)
 
             if prompt_num == 1:
