@@ -124,7 +124,7 @@ class AppGUI:
 
         # Horizontal buttons for Prompt 1
         self.button_frame1 = ttk.Frame(audio_gen_frame)
-        self.regenerate_button1 = ttk.Button(self.button_frame1, text="Regenerate", command=lambda: self.regenerate_response(1))
+        self.regenerate_button1 = ttk.Button(self.button_frame1, text="Reegenerate prompt", command=lambda: self.regenerate_response(1))
         self.edit_with_llm_button1 = ttk.Button(self.button_frame1, text="Regenerate with feedback", command=lambda: self.edit_with_llm(1))
         self.save_button1 = ttk.Button(self.button_frame1, text="Apply", command=lambda: self.save_response(1))  # Renamed from "Next" to "Apply"
 
@@ -141,7 +141,7 @@ class AppGUI:
 
         # Prompt 2 Buttons Frame (contains regenerate and feedback buttons)
         self.prompt2_button_frame = ttk.Frame(audio_gen_frame)
-        self.regenerate_button2 = ttk.Button(self.prompt2_button_frame, text="Regenerate", command=lambda: self.regenerate_response(2))
+        self.regenerate_button2 = ttk.Button(self.prompt2_button_frame, text="Regenerate prompt", command=lambda: self.regenerate_response(2))
         self.edit_with_llm_button2 = ttk.Button(self.prompt2_button_frame, text="Regenerate with feedback", command=lambda: self.edit_with_llm(2))
         self.regenerate_button2.pack(side="left", padx=5, pady=5)
         self.edit_with_llm_button2.pack(side="left", padx=5, pady=5)
@@ -174,7 +174,7 @@ class AppGUI:
 
         # Finish Button Frame
         self.finish_button_frame = ttk.Frame(audio_gen_frame)
-        self.finish_button2 = ttk.Button(self.finish_button_frame, text="Generate", command=lambda: self.save_response(2))
+        self.finish_button2 = ttk.Button(self.finish_button_frame, text="Generate Effects", command=lambda: self.save_response(2))
         self.finish_button2.pack(pady=5)
 
         # Audio Playback and Output Folder Buttons
