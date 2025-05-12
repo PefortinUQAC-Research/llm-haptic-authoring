@@ -1,3 +1,6 @@
+import sys
+if getattr(sys, 'frozen', False):
+    import pyi_splash
 from gui import AppGUI
 from logic import VibrotactileGenerator
 from config import SETTINGS
@@ -13,6 +16,8 @@ def main():
 
     generator = VibrotactileGenerator()  # Core logic component
     app = AppGUI(generator, SETTINGS)    # GUI component with injected logic and settings
+    if getattr(sys, 'frozen', False):
+        pyi_splash.close()
     app.run()                            # Start the GUI loop
 
 if __name__ == "__main__":
