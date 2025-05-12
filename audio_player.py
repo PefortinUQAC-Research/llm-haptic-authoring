@@ -1,3 +1,4 @@
+from config import SETTINGS
 import tkinter as tk
 from tkinter import ttk, messagebox
 import pygame
@@ -88,7 +89,7 @@ class PygameMediaPlayer:
         Update the list of audio files displayed in the listbox.
         """
         self.audio_listbox.delete(0, tk.END)
-        output_path = './Output'
+        output_path = SETTINGS['default_save_path']  # './Output'
         if os.path.exists(output_path):
             try:
                 audio_files = [f for f in os.listdir(output_path) if f.endswith('.wav')]
@@ -111,7 +112,7 @@ class PygameMediaPlayer:
         if selection:
             index = selection[0]
             file_name = event.widget.get(index)
-            file_path = os.path.join('./Output', file_name)
+            file_path = os.path.join(SETTINGS['default_save_path'], file_name)
             self.load_audio(file_path)
 
     def load_audio(self, file_path):
@@ -218,7 +219,7 @@ class PygameMediaPlayer:
         """
         Open the output folder in the system's file explorer.
         """
-        output_path = './Output'
+        output_path = SETTINGS['default_save_path']  # ./Output'
         if os.path.exists(output_path):
             try:
                 subprocess.Popen(f'explorer "{os.path.realpath(output_path)}"', shell=True)
