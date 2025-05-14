@@ -356,7 +356,7 @@ class AppGUI:
                     self.show_warning("Prompt 1 description is empty. Please generate or enter a description.")
                     return
                 new_response = self.llm.generate_description_prompt2(prompt1_description)
-                add_to_log("p1_to_p2", prompt1_description, new_repsonse)
+                add_to_log("p1_to_p2", prompt1_description, new_response)
                 response_data = json.loads(new_response)
                 with self.lock:
                     self.saved_prompt2_response = new_response
@@ -724,7 +724,7 @@ class AppGUI:
 
             self.generator.update_model_settings(duration)
 
-            add_to_log("p2_to_effect", prompt_text, f"{num_generations}x {file_name}")
+            add_to_log("p2_to_effect", prompt_text, f"{num_generations}x {duration}s - {file_name}")
             for iteration in range(num_generations):
                 output_cpu = self.generator.generate_model(prompt_text)
                 generated_file_name = f"{file_name}_{iteration}.wav"
@@ -734,12 +734,12 @@ class AppGUI:
                 # Update progress bar
                 self.update_progress_bar(iteration + 1)
 
-            with open(f"{save_path}/{file_name}_prompt.txt", 'a', encoding="utf-8") as f:
-                f.write(f"{datetime.now().isoformat(timespec='seconds')}\n")
-                if type(prompt_dict) == dict:
-                    f.write(f"{json.dumps(prompt_dict)}\n")
-                else:
-                    f.write(f"{prompt_text}\n")
+            # with open(f"{save_path}/{file_name}_prompt.txt", 'a', encoding="utf-8") as f:
+            #     f.write(f"{datetime.now().isoformat(timespec='seconds')}\n")
+            #     if type(prompt_dict) == dict:
+            #         f.write(f"{json.dumps(prompt_dict)}\n")
+            #     else:
+            #         f.write(f"{prompt_text}\n")
 
             self.show_info("Audio generation completed successfully!")
             self.audio_player.audio_generation_done(generated_files)
@@ -921,7 +921,7 @@ class AppGUI:
         """
         Show an informational message in a thread-safe manner.
         """
-        self.root.after(0, messagebox.showinfo, "Info", message)
+        self.root.after(0, messagebox.askokcancel, "Info", message)
 
     def show_warning(self, message: str):
         """
