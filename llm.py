@@ -1,5 +1,9 @@
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, SystemMessage
+import logging
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class LLMClass:
@@ -14,6 +18,7 @@ class LLMClass:
         self.llm = ChatOllama(
             temperature = self.temperature,
             base_url = self.url,
+            format="json",
             client_kwargs={"headers": {"Authorization": f"Bearer {self.api_key}"}},
             model = self.model_name
         )
@@ -73,6 +78,7 @@ class LLMClass:
         ]
         
         response = self.llm.invoke(messages)
+        logger.info(response.content)
         return response.content  # Extract the description from the LLM response
     
     def generate_description_prompt2(self, description):
@@ -106,6 +112,7 @@ class LLMClass:
         ]
 
         response = self.llm.invoke(messages)
+        logger.info(response.content)
         return response.content  # Extract the description from the LLM response
     
     def generate_edited_prompt(self, current_json, instructions):
@@ -129,6 +136,7 @@ class LLMClass:
         ]
 
         response = self.llm.invoke(messages)
+        logger.info(response.content)
         return response.content # Extract the description from the LLM response
 
 
