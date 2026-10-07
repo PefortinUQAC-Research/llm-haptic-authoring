@@ -1,6 +1,6 @@
 # Vibrotactile Audio Generator
 
-*Vous cherchez la version originale française ? Elle reste disponsible [ici](./README.fr.md).*
+*Vous cherchez la version originale française ? Elle reste disponible [ici](./README.fr.md).*
 
 The Vibrotactile Audio Generator is an advanced Python application to generate and play audio files imitating tactile sensations. This tool is made for developers and researchers working on projects related to vibrotactile haptic feedback, particularly video games and exteneded reality (XR) applications.
 
