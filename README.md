@@ -4,6 +4,8 @@
 
 The Vibrotactile Audio Generator is an advanced Python application to generate and play audio files imitating tactile sensations. This tool is made for developers and researchers working on projects related to vibrotactile haptic feedback, particularly video games and exteneded reality (XR) applications.
 
+Note that there are two versions of this code. The original version, compatible with the OpenAI API, is present in the `main` branch. The modified version, with various changes including switching to the Ollama API, is present in the `ollama` branch.
+
 ## Features
 
 - **Audio Generation**: A large language model (LLM) is used to produce detailed vibrotactile descriptions and AudioCraft is used to generate the corresponding audio files.
